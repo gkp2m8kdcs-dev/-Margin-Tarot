@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Margin Tarot — A Complete Tarot Companion</title>
+<meta name="description" content="Margin Tarot brings the full 78-card tarot to your iPhone — five spread layouts, daily card practice, deep card meanings, and a personal journal.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%237b3fda'/%3E%3Ctext x='50' y='62' text-anchor='middle' font-size='44' fill='%23fff'%3E✦%3C/text%3E%3C/svg%3E">
+<style>
+  :root{
+    --bg-top:#0d0820;
+    --bg-bottom:#1a0f3d;
+    --accent:#c9a8ff;
+    --gold:#e6c87a;
+    --teal:#7fc8c9;
+    --text:#ece6f7;
+    --muted:#a89cc4;
+    --card:rgba(255,255,255,0.04);
+    --border:rgba(201,168,255,0.2);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:linear-gradient(180deg,var(--bg-top),var(--bg-bottom));color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+  body{min-height:100vh}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  .nav{position:sticky;top:0;z-index:50;background:rgba(13,8,32,0.85);backdrop-filter:saturate(140%) blur(14px);-webkit-backdrop-filter:saturate(140%) blur(14px);border-bottom:1px solid var(--border)}
+  .nav-inner{max-width:1080px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:300;font-size:18px;letter-spacing:0.5px}
+  .brand-mark{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--gold));display:grid;place-items:center;color:#1a0f3d;font-size:14px;font-weight:600}
+  .nav-links{display:flex;gap:22px;font-size:14px}
+  .nav-links a{color:var(--text);opacity:0.8}
+  .nav-links a:hover{opacity:1;text-decoration:none}
+  @media (max-width:640px){.nav-links{display:none}}
+
+  .hero{max-width:1080px;margin:0 auto;padding:80px 24px 64px;text-align:center}
+  .hero-eyebrow{color:var(--gold);font-size:12px;letter-spacing:3px;text-transform:uppercase;margin-bottom:16px}
+  .hero h1{font-size:clamp(34px,6vw,56px);font-weight:300;line-height:1.15;margin-bottom:18px;background:linear-gradient(180deg,#fff,var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p.lede{font-size:clamp(15px,2.2vw,18px);color:var(--muted);max-width:680px;margin:0 auto 28px}
+  .cta-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:13px 22px;border-radius:999px;font-size:14px;font-weight:500;border:1px solid var(--border);transition:transform .15s ease,background .15s ease}
+  .btn:hover{transform:translateY(-1px)}
+  .btn-primary{background:linear-gradient(135deg,var(--accent),var(--gold));color:#1a0f3d;border:none}
+  .btn-ghost{background:transparent;color:var(--text)}
+  .btn-ghost:hover{background:var(--card)}
+
+  .container{max-width:1080px;margin:0 auto;padding:0 24px}
+
+  section{padding:64px 0}
+  .section-title{text-align:center;font-size:clamp(24px,4vw,34px);font-weight:300;margin-bottom:8px}
+  .section-sub{text-align:center;color:var(--muted);margin-bottom:42px;font-size:15px}
+
+  .features{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+  .feature{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px}
+  .feature .ico{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,rgba(201,168,255,0.2),rgba(230,200,122,0.2));display:grid;place-items:center;font-size:18px;margin-bottom:14px}
+  .feature h3{font-size:16px;font-weight:500;margin-bottom:6px}
+  .feature p{font-size:13px;color:var(--muted);line-height:1.55}
+
+  .spreads{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+  .spread{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;text-align:center}
+  .spread .cards{font-size:22px;color:var(--gold);margin-bottom:8px;letter-spacing:2px}
+  .spread h4{font-size:14px;font-weight:500;margin-bottom:4px}
+  .spread p{font-size:12px;color:var(--muted)}
+
+  .quote{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;text-align:center;max-width:680px;margin:0 auto}
+  .quote blockquote{font-style:italic;color:var(--text);font-size:17px;line-height:1.6;margin-bottom:10px}
+  .quote cite{color:var(--muted);font-size:12px;font-style:normal}
+
+  .privacy-strip{background:linear-gradient(135deg,rgba(201,168,255,0.08),rgba(127,200,201,0.08));border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:28px 0}
+  .privacy-strip-inner{max-width:1080px;margin:0 auto;padding:0 24px;display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between}
+  .privacy-strip p{font-size:14px;color:var(--muted);max-width:640px}
+  .privacy-strip a{font-weight:500}
+
+  footer{border-top:1px solid var(--border);padding:36px 0;margin-top:32px}
+  .footer-inner{max-width:1080px;margin:0 auto;padding:0 24px;display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted)}
+  .footer-links{display:flex;gap:18px;flex-wrap:wrap}
+  .footer-links a{color:var(--muted)}
+  .footer-links a:hover{color:var(--text);text-decoration:none}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="brand">
+      <span class="brand-mark">✦</span>
+      <span>Margin Tarot</span>
+    </div>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#spreads">Spreads</a>
+      <a href="#privacy">Privacy</a>
+      <a href="support.html">Support</a>
+      <a href="terms.html">Terms</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-eyebrow">A Complete Tarot Companion</div>
+  <h1>A quiet companion for reflection,<br>learning, and creative exploration.</h1>
+  <p class="lede">Margin Tarot brings the full 78-card tarot to your iPhone — five spread layouts, a daily card practice, deep card meanings, and a personal journal. Designed for the moments when you want a card to sit with you.</p>
+  <div class="cta-row">
+    <a class="btn btn-primary" href="#download">Download on the App Store</a>
+    <a class="btn btn-ghost" href="#features">Learn more →</a>
+  </div>
+</header>
+
+<section id="features">
+  <div class="container">
+    <h2 class="section-title">Everything you need, nothing you don't</h2>
+    <p class="section-sub">Built for quiet moments of reflection — no account, no ads, no data leaving your device.</p>
+    <div class="features">
+      <div class="feature">
+        <div class="ico">✦</div>
+        <h3>Complete 78-card library</h3>
+        <p>Every card of the Major and Minor Arcana, each with hand-rendered design, upright and reversed meanings, keywords, astrological association, and a short affirmation.</p>
+      </div>
+      <div class="feature">
+        <div class="ico">◫</div>
+        <h3>Five spread layouts</h3>
+        <p>Single card, three-card line, five-card cross, ten-card Celtic Cross, and a focused love spread — each opens with your own question.</p>
+      </div>
+      <div class="feature">
+        <div class="ico">☀</div>
+        <h3>Daily card practice</h3>
+        <p>A single point of attention that rotates automatically each day. Sit with one card before the day decides itself.</p>
+      </div>
+      <div class="feature">
+        <div class="ico">◉</div>
+        <h3>Custom card capture</h3>
+        <p>Bring your own physical deck into the app: photograph a card or import an image, name it, add a note, and keep it in your private collection.</p>
+      </div>
+      <div class="feature">
+        <div class="ico">❖</div>
+        <h3>Personal journal</h3>
+        <p>Save each reading with a personal reflection for later. Your journal stays on your device and can be cleared at any time.</p>
+      </div>
+      <div class="feature">
+        <div class="ico">⌂</div>
+        <h3>Local-only storage</h3>
+        <p>No account, no sign-in, nothing leaves your device. Everything is stored locally and you stay in control of your data.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="spreads" style="background:rgba(255,255,255,0.015)">
+  <div class="container">
+    <h2 class="section-title">Five spreads, ready when you are</h2>
+    <p class="section-sub">Each reading opens with a question you write yourself, a card-by-card reveal that lets you sit with each one before turning the next.</p>
+    <div class="spreads">
+      <div class="spread"><div class="cards">✦</div><h4>Single Card</h4><p>A guiding point of focus</p></div>
+      <div class="spread"><div class="cards">✦ ✦ ✦</div><h4>Three-Card</h4><p>Past, present, and future</p></div>
+      <div class="spread"><div class="cards">✦ ✦ ✦ ✦ ✦</div><h4>Five-Card Cross</h4><p>A fuller situation reading</p></div>
+      <div class="spread"><div class="cards">✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦ ✦</div><h4>Celtic Cross</h4><p>Ten cards for depth</p></div>
+      <div class="spread"><div class="cards">♥</div><h4>Love Spread</h4><p>A focused relationship reading</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="quote">
+      <blockquote>“The cards do not decide for you — they sit with you while you do.”</blockquote>
+      <cite>— Margin Tarot</cite>
+    </div>
+  </div>
+</section>
+
+<section id="privacy" class="privacy-strip">
+  <div class="privacy-strip-inner">
+    <p><strong>Your privacy matters.</strong> Margin Tarot stores everything on your device. The app uses a limited tracking SDK (Adjust) to measure advertising performance — you can disable tracking anytime in Settings. Full details in our <a href="privacy.html">Privacy Policy</a>.</p>
+    <a class="btn btn-ghost" href="privacy.html">Read Privacy Policy →</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div>© 2026 Margin Tarot. Crafted for quiet reflection.</div>
+    <div class="footer-links">
+      <a href="support.html">Support</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms of Use</a>
+      <a href="mailto:Mefepzavap@icloud.com">Contact</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
